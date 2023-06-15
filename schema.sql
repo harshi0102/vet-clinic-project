@@ -4,10 +4,9 @@ CREATE TABLE animal (
     date_of_birth DATE,
     escape_attempts INT,
     neutered BOOLEAN,
-    weight_kg DECIMAL,
-    species_id INT,
-    owner_id INT
+    weight_kg DECIMAL
 );
+ALTER TABLE animal DROP column species;
 
 ALTER TABLE animal ADD species_id INT;
 ALTER TABLE animal ADD owner_id INT;

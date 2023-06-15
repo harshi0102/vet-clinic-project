@@ -1,12 +1,25 @@
-/* Database schema to keep the structure of entire database. */
+CREATE TABLE animal (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    date_of_birth DATE,
+    escape_attempts INT,
+    neutered BOOLEAN,
+    weight_kg DECIMAL
+);
+ALTER TABLE animal DROP column species;
 
-CREATE TABLE animals (
-    id BIGSERIAL PRIMARY KEY NOT NULL,
-    name VARCHAR(300) NOT NULL,
-    date_of_birth DATE NOT NULL,
-    escape_attempts INTEGER NOT NULL,
-    neutered BOOLEAN NOT NULL,
-    weight_kg DECIMAL NOT NULL
+ALTER TABLE animal ADD species_id INT;
+ALTER TABLE animal ADD owner_id INT;
+ALTER TABLE animal ADD FOREIGN KEY (species_id) REFERENCES species(id);
+ALTER TABLE animal ADD FOREIGN KEY (owner_id) REFERENCES owners(id);
+
+CREATE TABLE owners (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(250),
+    age INT
 );
 
-ALTER TABLE animals ADD COLUMN species VARCHAR(100);
+CREATE TABLE species (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(250)
+);

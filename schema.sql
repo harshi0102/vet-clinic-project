@@ -1,58 +1,68 @@
 /* Database schema to keep the structure of entire database. */
 
 CREATE DATABASE vet_clinic;
-\c vet_clinic
 
 CREATE TABLE animals (
-  id              INT GENERATED ALWAYS AS IDENTITY,
-  pet_name        VARCHAR(15),
-  date_of_birth   DATE,
-  escape_attempts INT,
-  neutered        BOOLEAN,
-  weight_kg       DECIMAL,  
-  PRIMARY KEY(id)
+    id INT GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(100),
+	date_of_birth DATE,
+	escape_attempts INT,
+	neutered BOOLEAN,
+	weight_kg DECIMAL
 );
 
-ALTER TABLE animals ADD COLUMN species VARCHAR(20);
+ALTER TABLE animals 
+	ADD species varchar(255);
 
 CREATE TABLE owners (
-  id SERIAL PRIMARY KEY,
-  full_name TEXT,
-  age INTEGER
+	id SERIAL PRIMARY KEY NOT NULL,
+	full_name VARCHAR(100) NOT NULL,
+	age INT NOT NULL
 );
 
 CREATE TABLE species (
-  id SERIAL PRIMARY KEY,
-  name TEXT
+	id SERIAL PRIMARY KEY NOT NULL,
+	name VARCHAR(100) NOT NULL	
 );
+
+ALTER TABLE animals DROP COLUMN id;
+ALTER TABLE animals ADD id SERIAL PRIMARY KEY;
 
 ALTER TABLE animals DROP COLUMN species;
 
--- Add the 'species_id' column as a foreign key referencing the 'species' table
-ALTER TABLE animals ADD COLUMN species_id INTEGER REFERENCES species(id);
+ALTER TABLE animals ADD species_id INT, 
+	ADD CONSTRAINT fk_species
+	FOREIGN KEY (species_id)
+	REFERENCES species (id);
 
--- Add the 'owner_id' column as a foreign key referencing the 'owners' table
-ALTER TABLE animals ADD COLUMN owner_id INTEGER REFERENCES owners(id);
+ALTER TABLE animals ADD owner_id INT, 
+	ADD CONSTRAINT fk_owner
+	FOREIGN KEY (owner_id)
+	REFERENCES owners (id);
 
 CREATE TABLE vets (
-  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  name VARCHAR(50),
-  age INT,
-  date_of_graduation DATE
+	id SERIAL PRIMARY KEY NOT NULL,
+	name VARCHAR(100) NOT NULL,
+	age INT,
+	date_of_graduation DATE NOT NULL
 );
 
 CREATE TABLE specializations (
-  vet_id INTEGER REFERENCES vets(id),
-  species_id INTEGER REFERENCES species(id),
-  PRIMARY KEY(vet_id, species_id)
+	species_id INT NOT NULL,
+	vet_id INT NOT NULL,
+	FOREIGN KEY (species_id) REFERENCES species (id),
+	FOREIGN KEY (vet_id) REFERENCES vets (id)	
 );
 
 CREATE TABLE visits (
-  id            INT GENERATED ALWAYS AS IDENTITY,
-  animal_id     INT,
-  vet_id        INT,
-  visit_date    DATE,
-  PRIMARY KEY(id),
-  FOREIGN KEY(animal_id) REFERENCES animals(id),
-  FOREIGN KEY(vet_id) REFERENCES vets(id)
+	animals_id INT NOT NULL,
+	vet_id INT NOT NULL,
+	date_of_visit DATE NOT NULL,
+	FOREIGN KEY (animals_id) REFERENCES animals (id),
+	FOREIGN KEY (vet_id) REFERENCES vets (id)	
 );
+
+CREATE INDEX visits_animals_index ON visits(animal_id);
+CREATE INDEX visits_vets_index ON visits(vet_id desc);
+ALTER TABLE owners ADD COLUMN email VARCHAR(255);
+CREATE INDEX owners_email_index ON owners(email); 

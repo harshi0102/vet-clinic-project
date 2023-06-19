@@ -172,10 +172,13 @@ Example:
 - Twitter: [@harshika0102me](https://twitter.com/harshika0102me)
 - LinkedIn: [harshikagovind](https://linkedin.com/in/harshikagovind)
 
+👤 **Massa zoumanigui**
 
+- GitHub: [@massazoum](https://github.com/massazoum)
+- Twitter: [@zoumaniguimass1](https://twitter.com/zoumaniguimass1)
+- LinkedIn: [LinkedIn](www.linkedin.com/in/massa-zoumanigui-1aba4525a)
+  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- FUTURE FEATURES -->
 
 ## 🔭 Future Features <a name="future-features"></a>
 

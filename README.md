@@ -1,3 +1,4 @@
+![image](https://github.com/harshi0102/vet-clinic-project/assets/108334376/6b76ec29-7b8b-4e91-ace2-4249a8c17648)
 
 <a name="readme-top"></a>
 
@@ -65,7 +66,15 @@ A database project that involves using PostgreSQL. In this project, I used a rel
 ### Key Features <a name="key-features"></a>
 
 - An Animal table containing the following columns: Id, Name, Date of birth, Escape attempts, Neutered, Weight
-
+- **[Create database]**
+- **[Create table]**
+- **[Insert into database]**
+- **[Query database]**
+- **[Update and delete from database]**
+- **[SQl transactions]**
+- **[SQl Aggregates]**
+- **[Alter table attributes and constraints]**
+- **[SQL JOIN]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

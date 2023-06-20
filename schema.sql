@@ -1,68 +1,30 @@
 /* Database schema to keep the structure of entire database. */
-
-CREATE DATABASE vet_clinic;
-
 CREATE TABLE animals (
     id INT GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(100),
-	date_of_birth DATE,
-	escape_attempts INT,
-	neutered BOOLEAN,
-	weight_kg DECIMAL
+    name varchar(250), date_of_birth date,
+    escape_attempts INT, neutered boolean,
+    weight_kg decimal
 );
+ALTER TABLE animals add species varchar(50);
 
-ALTER TABLE animals 
-	ADD species varchar(255);
+/* Vet clinic database: query multiple tables */
+CREATE TABLE owners(id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, full_name VARCHAR(250), age int);
+CREATE TABLE species(id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name VARCHAR(100));
+ALTER TABLE animals ADD PRIMARY KEY(id);
+ALTER TABLE animals DROP species;
+ALTER TABLE animals ADD species_id int;
+ALTER TABLE animals ADD CONSTRAINT fk_species FOREIGN KEY (species_id) REFERENCES species(id) ON DELETE CASCADE;
+ALTER TABLE animals ADD owner_id int;
+ALTER TABLE animals ADD CONSTRAINT fk_owner FOREIGN KEY(owner_id) REFERENCES owners(id) ON DELETE CASCADE;
 
-CREATE TABLE owners (
-	id SERIAL PRIMARY KEY NOT NULL,
-	full_name VARCHAR(100) NOT NULL,
-	age INT NOT NULL
-);
+/* Vet clinic database: add "join table" for visits */
+CREATE TABLE VETS(ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, NAME VARCHAR(20
+0), AGE INT, DATE_OF_GRADUATION DATE);
+CREATE TABLE SPECIALIZATIONS (SPECIES_ID INT, VETS_ID INT);
+CREATE TABLE VISITS(ANIMALS_ID INT, VETS_ID INT, DATE_OF_VISIT DATE);
 
-CREATE TABLE species (
-	id SERIAL PRIMARY KEY NOT NULL,
-	name VARCHAR(100) NOT NULL	
-);
-
-ALTER TABLE animals DROP COLUMN id;
-ALTER TABLE animals ADD id SERIAL PRIMARY KEY;
-
-ALTER TABLE animals DROP COLUMN species;
-
-ALTER TABLE animals ADD species_id INT, 
-	ADD CONSTRAINT fk_species
-	FOREIGN KEY (species_id)
-	REFERENCES species (id);
-
-ALTER TABLE animals ADD owner_id INT, 
-	ADD CONSTRAINT fk_owner
-	FOREIGN KEY (owner_id)
-	REFERENCES owners (id);
-
-CREATE TABLE vets (
-	id SERIAL PRIMARY KEY NOT NULL,
-	name VARCHAR(100) NOT NULL,
-	age INT,
-	date_of_graduation DATE NOT NULL
-);
-
-CREATE TABLE specializations (
-	species_id INT NOT NULL,
-	vet_id INT NOT NULL,
-	FOREIGN KEY (species_id) REFERENCES species (id),
-	FOREIGN KEY (vet_id) REFERENCES vets (id)	
-);
-
-CREATE TABLE visits (
-	animals_id INT NOT NULL,
-	vet_id INT NOT NULL,
-	date_of_visit DATE NOT NULL,
-	FOREIGN KEY (animals_id) REFERENCES animals (id),
-	FOREIGN KEY (vet_id) REFERENCES vets (id)	
-);
-
-CREATE INDEX visits_animals_index ON visits(animal_id);
-CREATE INDEX visits_vets_index ON visits(vet_id desc);
-ALTER TABLE owners ADD COLUMN email VARCHAR(255);
-CREATE INDEX owners_email_index ON owners(email);
+/* Vet clinic database: database performance audit */
+ALTER TABLE OWNERS ADD COLUMN EMAIL VARCHAR(120);
+CREATE INDEX ANIMALS_ID_INDEX ON VISITS(animals_id ASC);
+CREATE INDEX VETS_ID_INDEX ON VISITS(vets_id ASC);
+CREATE INDEX OWNER_INDEX ON OWNERS(EMAIL);

@@ -65,7 +65,15 @@ A database project that involves using PostgreSQL. In this project, I used a rel
 ### Key Features <a name="key-features"></a>
 
 - An Animal table containing the following columns: Id, Name, Date of birth, Escape attempts, Neutered, Weight
-
+- **[Create database]**
+- **[Create table]**
+- **[Insert into database]**
+- **[Query database]**
+- **[Update and delete from database]**
+- **[SQl transactions]**
+- **[SQl Aggregates]**
+- **[Alter table attributes and constraints]**
+- **[SQL JOIN]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

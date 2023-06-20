@@ -1,3 +1,4 @@
+![image](https://github.com/harshi0102/vet-clinic-project/assets/108334376/6b76ec29-7b8b-4e91-ace2-4249a8c17648)
 
 <a name="readme-top"></a>
 

@@ -31,3 +31,10 @@ CREATE TABLE invoice_items (
   FOREIGN KEY (invoice_id) REFERENCES invoices (id),
   FOREIGN KEY (treament_id) REFERENCES treaments (id)
 );
+CREATE TABLE treaments (
+  id SERIAL PRIMARY KEY,
+  type INT,
+  name VARCHAR(225),
+  medical_history_id INT,
+  FOREIGN KEY (medical_history_id) REFERENCES medical_histories (id)
+);

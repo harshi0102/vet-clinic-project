@@ -38,3 +38,9 @@ CREATE TABLE treaments (
   medical_history_id INT,
   FOREIGN KEY (medical_history_id) REFERENCES medical_histories (id)
 );
+
+CREATE INDEX ON medical_histories (patient_id);
+CREATE INDEX ON invoices (medical_history_id);
+CREATE INDEX ON invoice_items (invoice_id);
+CREATE INDEX ON invoice_items (treament_id);
+CREATE INDEX ON treaments (medical_history_id);
